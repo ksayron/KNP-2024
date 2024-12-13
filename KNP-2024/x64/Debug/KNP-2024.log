@@ -1,0 +1,47 @@
+﻿  CodeExectuion.cpp
+  CodeGeneration.cpp
+D:\BSTU\Projects\KNP-2024\KNP-2024\CodeGeneration.cpp(21,16): warning C4101: func: неиспользованная локальная переменная
+D:\BSTU\Projects\KNP-2024\KNP-2024\CodeGeneration.cpp(620,14): warning C4129: "e": нераспознанная escape-последовательность символов
+  Error.cpp
+  FST.cpp
+D:\BSTU\Projects\KNP-2024\KNP-2024\FST.cpp(118,16): warning C4267: инициализация: преобразование из "size_t" в "short"; возможна потеря данных
+D:\BSTU\Projects\KNP-2024\KNP-2024\FST.cpp(1313,15): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+D:\BSTU\Projects\KNP-2024\KNP-2024\FST.cpp(1320,11): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+D:\BSTU\Projects\KNP-2024\KNP-2024\FST.cpp(1652,18): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+D:\BSTU\Projects\KNP-2024\KNP-2024\FST.cpp(1663,22): error C2668: IT::Entry::Entry: неоднозначный вызов перегруженной функции
+      D:\BSTU\Projects\KNP-2024\KNP-2024\IT.h(93,3):
+      может быть "IT::Entry::Entry(int,const char *,IT::IDDATATYPE,IT::IDTYPE,char,bool)"
+      D:\BSTU\Projects\KNP-2024\KNP-2024\IT.h(71,3):
+      или       "IT::Entry::Entry(int,const char *,IT::IDDATATYPE,IT::IDTYPE,int,bool)"
+      D:\BSTU\Projects\KNP-2024\KNP-2024\IT.h(35,3):
+      или       "IT::Entry::Entry(int,const char *,IT::IDDATATYPE,IT::IDTYPE,bool)"
+      D:\BSTU\Projects\KNP-2024\KNP-2024\FST.cpp(1663,22):
+      при попытке сопоставить список аргументов "(int, const _Elem *, IT::IDDATATYPE, IT::IDTYPE, unsigned int)"
+          with
+          [
+              _Elem=char
+          ]
+  
+  GRB.cpp
+  In.cpp
+D:\BSTU\Projects\KNP-2024\KNP-2024\In.cpp(22,13): warning C4244: инициализация: преобразование "std::streamoff" в "int", возможна потеря данных
+D:\BSTU\Projects\KNP-2024\KNP-2024\In.cpp(121,21): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+  IT.cpp
+  Log.cpp
+  LT.cpp
+  MFST.cpp
+  PolishNotation.cpp
+D:\BSTU\Projects\KNP-2024\KNP-2024\PolishNotation.cpp(71,12): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+  Out.cpp
+  Parm.cpp
+D:\BSTU\Projects\KNP-2024\KNP-2024\Parm.cpp(19,44): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+D:\BSTU\Projects\KNP-2024\KNP-2024\Parm.cpp(19,26): warning C4267: инициализация: преобразование из "size_t" в "const int"; возможна потеря данных
+D:\BSTU\Projects\KNP-2024\KNP-2024\Parm.cpp(20,11): warning C4101: wst: неиспользованная локальная переменная
+  Semantic.cpp
+  KNP-2024.cpp
+D:\BSTU\Projects\KNP-2024\KNP-2024\KNP-2024.cpp(38,44): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+D:\BSTU\Projects\KNP-2024\KNP-2024\KNP-2024.cpp(38,74): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+  Создание кода...
+D:\BSTU\Projects\KNP-2024\KNP-2024\GRB.cpp(107,1): warning C5082: второй аргумент для "va_start" не является последним именованным параметром
+D:\BSTU\Projects\KNP-2024\KNP-2024\GRB.cpp(116,1): warning C5082: второй аргумент для "va_start" не является последним именованным параметром
+D:\BSTU\Projects\KNP-2024\KNP-2024\GRB.cpp(97,1): warning C5082: второй аргумент для "va_start" не является последним именованным параметром

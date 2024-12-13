@@ -1,0 +1,33 @@
+declare num action counter(num count){
+	write count;
+	while(count>0){
+	write count;
+	count = count - 1;
+	};
+	return count;
+};
+
+
+main
+{
+	declare num number;  #comment
+	number = -11;
+	write number;
+	if(number > 5){
+	write number;
+	write "If works";
+	}
+	number = counter(5);
+	declare symb symbol;
+	symbol = 'q';
+
+	write "Symbol";
+	write symbol;
+	write "is new";
+
+	declare str line;
+	line = "Hello, World!";
+	write line;
+	
+	return 0;
+}

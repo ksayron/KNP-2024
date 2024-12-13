@@ -1,0 +1,10 @@
+
+main
+{
+	declare num number;  #comment
+	number = -11;
+	write number;
+
+	
+	return 0;
+}

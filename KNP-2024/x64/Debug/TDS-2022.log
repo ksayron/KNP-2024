@@ -1,0 +1,33 @@
+﻿  CodeGeneration.cpp
+D:\BSTU\Git\TDS-2022\TDS-2022\TDS-2022\CodeGeneration.cpp(21,16): warning C4101: func: неиспользованная локальная переменная
+D:\BSTU\Git\TDS-2022\TDS-2022\TDS-2022\CodeGeneration.cpp(620,14): warning C4129: "e": нераспознанная escape-последовательность символов
+  Error.cpp
+  FST.cpp
+D:\BSTU\Git\TDS-2022\TDS-2022\TDS-2022\FST.cpp(118,16): warning C4267: инициализация: преобразование из "size_t" в "short"; возможна потеря данных
+D:\BSTU\Git\TDS-2022\TDS-2022\TDS-2022\FST.cpp(1265,12): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+D:\BSTU\Git\TDS-2022\TDS-2022\TDS-2022\FST.cpp(1272,11): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+D:\BSTU\Git\TDS-2022\TDS-2022\TDS-2022\FST.cpp(1592,18): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+  GRB.cpp
+  In.cpp
+D:\BSTU\Git\TDS-2022\TDS-2022\TDS-2022\In.cpp(22,13): warning C4244: инициализация: преобразование "std::streamoff" в "int", возможна потеря данных
+D:\BSTU\Git\TDS-2022\TDS-2022\TDS-2022\In.cpp(121,21): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+  IT.cpp
+  Log.cpp
+  LT.cpp
+  MFST.cpp
+  PolishNotation.cpp
+D:\BSTU\Git\TDS-2022\TDS-2022\TDS-2022\PolishNotation.cpp(71,12): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+  Out.cpp
+  Parm.cpp
+D:\BSTU\Git\TDS-2022\TDS-2022\TDS-2022\Parm.cpp(19,44): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+D:\BSTU\Git\TDS-2022\TDS-2022\TDS-2022\Parm.cpp(19,26): warning C4267: инициализация: преобразование из "size_t" в "const int"; возможна потеря данных
+D:\BSTU\Git\TDS-2022\TDS-2022\TDS-2022\Parm.cpp(20,11): warning C4101: wst: неиспользованная локальная переменная
+  Semantic.cpp
+  KNP-2024.cpp
+D:\BSTU\Git\TDS-2022\TDS-2022\TDS-2022\KNP-2024.cpp(33,44): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+D:\BSTU\Git\TDS-2022\TDS-2022\TDS-2022\KNP-2024.cpp(33,74): warning C4267: аргумент: преобразование из "size_t" в "int"; возможна потеря данных
+  Создание кода...
+D:\BSTU\Git\TDS-2022\TDS-2022\TDS-2022\GRB.cpp(107,1): warning C5082: второй аргумент для "va_start" не является последним именованным параметром
+D:\BSTU\Git\TDS-2022\TDS-2022\TDS-2022\GRB.cpp(116,1): warning C5082: второй аргумент для "va_start" не является последним именованным параметром
+D:\BSTU\Git\TDS-2022\TDS-2022\TDS-2022\GRB.cpp(97,1): warning C5082: второй аргумент для "va_start" не является последним именованным параметром
+  TDS-2022.vcxproj -> D:\BSTU\Git\TDS-2022\TDS-2022\x64\Debug\KNP-2024.exe
