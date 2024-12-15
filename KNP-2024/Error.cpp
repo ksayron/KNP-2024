@@ -57,7 +57,7 @@ namespace Error
 		ERROR_ENTRY(120, "[LA]: Ошибка при разборе токена"), // +
 		ERROR_ENTRY(121, "[LA]: Используется необъявленный идентификатор"), // +
 		ERROR_ENTRY(122, "[LA]: Идентификатор не имеет типа"),
-		ERROR_ENTRY_NODEF(123),
+		ERROR_ENTRY(123, "[LA]: Массиву не присвоен размер"),
 		ERROR_ENTRY(124, "[LA]: Отсутствует точка входа"), // +
 		ERROR_ENTRY(125, "[LA]: Обнаружена вторая точка входа"),
 		ERROR_ENTRY_NODEF(126),
@@ -94,7 +94,7 @@ namespace Error
 		ERROR_ENTRY(606, "[Syntaxis]: Ошибка синтаксического анализа"),
 		ERROR_ENTRY(607, "[Syntaxis]: Ошибка условной конструкции"),
 		ERROR_ENTRY_NODEF(608),
-		ERROR_ENTRY(609, "[Syntaxis]: Обнаружена синтаксическая ошибка (смотри журнал Log)"),
+		ERROR_ENTRY_NODEF(609),
 		ERROR_ENTRY_NODEF10(610),
 		ERROR_ENTRY_NODEF10(620),
 		ERROR_ENTRY_NODEF10(630),
@@ -116,6 +116,7 @@ namespace Error
 		ERROR_ENTRY(708, "[Semantic]: Ошибочный оператор: строки можно только складывать"),
 		ERROR_ENTRY(709, "[Semantic]: Ошибочные параметры условной конструкции: строки не могут быть параметрами условной конструкции"),
 		ERROR_ENTRY(710, "[Semantic]: Ошибочный опреатор: для типа char разрешены только операции + и -"),
+		ERROR_ENTRY(711, "[Semantic]: Ошибочный параметр массива: неподходящий тип передаваеммого значения"),
 		ERROR_ENTRY_NODEF10(720),ERROR_ENTRY_NODEF10(730),ERROR_ENTRY_NODEF10(740),
 		ERROR_ENTRY_NODEF10(750),ERROR_ENTRY_NODEF10(760),ERROR_ENTRY_NODEF10(770),ERROR_ENTRY_NODEF10(780),
 		ERROR_ENTRY_NODEF10(790),

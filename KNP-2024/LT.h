@@ -5,9 +5,10 @@
 #define LEX_NUM 't'
 #define LEX_STRING	't'
 #define LEX_CHAR	't' 
-#define LEX_TYPE	LEX_STRING //лексема типа(uint/symbol)
+#define LEX_TYPE	't' //лексема типа(num/symb)
+#define LEX_ARRAY	'a'
 #define LEX_ID		'i'
-#define LEX_UNTIL		'u'
+#define LEX_UNTIL	'u'
 #define LEX_IF		'o'
 #define LEX_MAIN	'm'
 #define LEX_LITERAL	'l'
@@ -27,6 +28,9 @@
 #define LEX_LEFTHESIS	'('
 #define LEX_RIGHTHESIS	')'
 #define LEX_PLUS		'v'
+#define LEX_AND			'v'
+#define LEX_OR			'v'
+#define LEX_INVERSE		'v'
 #define LEX_MINUS		'v'
 #define LEX_STAR		'v'
 #define LEX_DIRSLASH	'v'

@@ -44,7 +44,6 @@ namespace IT
 		IdTable& idtable,	//возврат: номер строки(если есть) TI_NULLIDX(если нет)
 		char id[ID_MAXSIZE] //идентификатор
 	) {
-		int flag = -1;
 		bool bflag = false;
 		for (int i = 0; i < idtable.size; i++)
 		{
@@ -69,18 +68,30 @@ namespace IT
 	int IsLX(
 		IdTable& idtable,	//возврат: номер строки(если есть) TI_NULLID(если нет)
 		IDDATATYPE type,
-		unsigned int data
+		int data
 	) {
-		int flag = -1;
-		bool bflag = false;
-		for (int i = 0; i < idtable.size; i++)
-		{
-			if (idtable.table[i].idtype != IT::L || idtable.table[i].iddatatype != type
-				||
-				data != idtable.table[i].value.vint)
-				continue;
-			else
-				return i;
+
+		if(type == IT::INT){
+			for (int i = 0; i < idtable.size; i++)
+			{
+				if (idtable.table[i].idtype != IT::L || idtable.table[i].iddatatype != type
+					||
+					data != idtable.table[i].value.vint)
+					continue;
+				else
+					return i;
+			}
+		}
+		if(type==IT::ARR){
+			for (int i = 0; i < idtable.size; i++)
+			{
+				if (idtable.table[i].idtype != IT::L || idtable.table[i].iddatatype != type
+					||
+					data != idtable.table[i].value.vstr.len)
+					continue;
+				else
+					return i;
+			}
 		}
 		return TI_NULLIDX;
 	};
@@ -89,8 +100,6 @@ namespace IT
 		IDDATATYPE type,
 		char data
 	) {
-		int flag = -1;
-		bool bflag = false;
 		for (int i = 0; i < idtable.size; i++)
 		{
 			if (idtable.table[i].iddatatype != type
@@ -114,8 +123,6 @@ namespace IT
 			else
 				len++;
 		}
-		int flag = -1;
-		bool bflag = false;
 		for (int i = 0; i < idtable.size; i++)
 		{
 			if (idtable.table[i].iddatatype != type)

@@ -1,5 +1,5 @@
-п»ї//polish
-//РїРѕР»СѓС‡РёС‚СЊ РїСЂРёРѕС‚СЂРёС‚РµС‚ РґР»СЏ РїРѕР»СЊСЃРєРѕР№ РЅРѕС‚Р°С†РёРё
+//polish
+//получить приотритет для польской нотации
 #include <stack>
 #include <vector>
 #include <iostream>
@@ -52,9 +52,14 @@ namespace PolishNotation {
 			return 3;
 		case ':':
 			return 3;
-		default: {
+		case '&':
+			return 4; 
+		case '|':
+			return 4; 
+		case '^':
+			return 4; 
+		default:
 			return 0;
-		}
 		}
 	}
 
@@ -69,7 +74,8 @@ namespace PolishNotation {
 				lextable.table[pos + i].idxTI = LT_TI_NULLIDX;
 		}
 		int temp = str.size() + pos;
-		for (size_t i = 0; i < length - str.size(); i++) {
+		int size = length - str.size();
+		for (size_t i = 0; i < size; i++) {
 			lextable.table[temp + i].idxTI = LT_TI_NULLIDX;
 			lextable.table[temp + i].lexema = '!';
 			lextable.table[temp + i].sn = -1;
@@ -81,15 +87,19 @@ namespace PolishNotation {
 		container<std::stack<char>> stack;
 		std::string PolishString;
 		std::vector<int> ids;
-		int operators_count = 0, operands_count = 0, iterator = 0, right_counter = 0, left_counter = 0, params_counter = 0;
+		int operators_count = 0, operands_count = 0, iterator = 0, right_counter = 0, left_counter = 0, params_counter = 0,square_counter=0;
+		bool isInv = false;
+		bool isArrEl = false;
 
 		for (int i = lextable_pos; i < lextable.size; i++, iterator++) {
 			char lexem = lextable.table[i].lexema;
 			char data = lextable.table[i].data;
 			size_t stack_size = stack.size();
-			if (idtable.table[lextable.table[i].idxTI].idtype == IT::IDTYPE::F) {
-				stack.push('@');
-				operands_count--;
+			if(lextable.table[i].idxTI!=TI_NULLIDX){
+				if (idtable.table[lextable.table[i].idxTI].idtype == IT::IDTYPE::F) {
+					stack.push('@');
+					operands_count--;
+				}
 			}
 			switch (lexem) {
 			case LEX_OPERATOR:
@@ -100,6 +110,7 @@ namespace PolishNotation {
 						stack.pop();
 					}
 				}
+				if (data == '^')isInv = true;
 				stack.push(data);
 				operators_count++;
 				break;
@@ -118,7 +129,15 @@ namespace PolishNotation {
 			case LEX_LEFTHESIS:
 			{
 				left_counter++;
+				
 				stack.push(lexem);
+				break;
+			}
+			case LEX_LEFT_SQUAREBRACE:
+			{
+				square_counter++;
+				stack.push(lexem);
+				isArrEl = true;
 				break;
 			}
 			case LEX_RIGHTHESIS:
@@ -138,11 +157,17 @@ namespace PolishNotation {
 				}
 				break;
 			}
+			case LEX_RIGHT_SQUAREBRACE: {
+				square_counter--;
+				stack.push(lexem);
+				isArrEl = false;
+				break;
+			}
 			case LEX_SEMICOLON:
 			{
 				if (operators_count != 0 && operands_count != 0)
 					if ((!stack.empty() && (stack.top() == LEX_RIGHTHESIS || stack.top() == LEX_LEFTHESIS))
-						|| right_counter != left_counter || operands_count - operators_count != 1)
+						|| right_counter != left_counter || (operands_count - operators_count != 1 && !isInv))
 						return false;
 				while (!stack.empty()) {
 					PolishString += stack.top();
@@ -157,8 +182,14 @@ namespace PolishNotation {
 					params_counter++;
 				PolishString += lexem;
 				if (lextable.table[i].idxTI != LT_TI_NULLIDX)
+				{
+					IT::Entry item = IT::GetEntry(idtable, lextable.table[i].idxTI);
+					
 					ids.push_back(lextable.table[i].idxTI);
-				operands_count++;
+				}
+				if (!isArrEl) {
+					operands_count++;
+				}
 				break;
 			}
 			case LEX_LITERAL: {
@@ -167,7 +198,9 @@ namespace PolishNotation {
 				PolishString += lexem;
 				if (lextable.table[i].idxTI != LT_TI_NULLIDX)
 					ids.push_back(lextable.table[i].idxTI);
-				operands_count++;
+				if(!isArrEl){
+					operands_count++;
+				}
 				break;
 			}
 			}
@@ -183,7 +216,7 @@ namespace PolishNotation {
 		for (int i = 0; i < t.lextable.size; i++)
 			if (t.lextable.table[i].lexema == '+' || t.lextable.table[i].lexema == '-' || t.lextable.table[i].lexema == '*' ||
 				t.lextable.table[i].lexema == '/' || t.lextable.table[i].lexema == '\\' || t.lextable.table[i].lexema == ':' ||
-				t.lextable.table[i].lexema == '%')
+				t.lextable.table[i].lexema == '%' || t.lextable.table[i].lexema == '&' || t.lextable.table[i].lexema == '|' || t.lextable.table[i].lexema == '^')
 			{
 				t.lextable.table[i].data = t.lextable.table[i].lexema;
 				t.lextable.table[i].lexema = LEX_OPERATOR;

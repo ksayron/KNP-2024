@@ -165,11 +165,15 @@ namespace In
 						if (lexContainerLen == 0) {
 						currentLex.line = out.lines;
 						currentLex.col = line_counter;
-					}
-					if (lexContainerLen >= MAX_LEXEM_LENGTH - 1)
-						throw ERROR_THROW_IN(113, out.lines, line_counter);
-					lexContainer[lexContainerLen++] = tmp;
+						}
+						if (lexContainerLen >= MAX_LEXEM_LENGTH - 1)
+							throw ERROR_THROW_IN(113, out.lines, line_counter);
+						lexContainer[lexContainerLen++] = tmp;
 					} 
+					else if (tmp == '=' && *(out.lexems.back().lexem) == '=')
+					{
+						*(out.lexems.back().lexem) = '$';
+					}
 					else
 					{
 						

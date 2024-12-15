@@ -50,7 +50,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		MFST::Mfst mfst(tables, GRB::getGreibach(), parm.showMfst);
 		if (!mfst.start(log))
 		{
-			throw ERROR_THROW(609);
+			throw ERROR_THROW(600);
 		}
 		mfst.savededucation();
 		mfst.printrules(log);

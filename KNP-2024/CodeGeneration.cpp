@@ -9,29 +9,75 @@ namespace CG {
 			//разобрать строку выражения
 			if (t.lextable.table[i].lexema == LEX_EQUAL && t.lextable.table[i].data == '=')
 			{
-				*stream << '\n' << "; expression #" << t.lextable.table[i].sn << " :"; // вывод строки
+				bool recipientEl = false;
+				*stream << '\n' << "; expression #" << t.lextable.table[i].sn << " :"; // вывод разбираемого выражения
 
-				for (int j = -1; t.lextable.table[i + j].lexema != LEX_SEMICOLON; j++) // 
-				{
-					*stream << t.lextable.table[i + j].lexema;
+				if(t.lextable.table[i -1].lexema == ']') {
+					for (int j = -4; t.lextable.table[i + j].lexema != LEX_SEMICOLON; j++) // 
+					{
+						*stream << t.lextable.table[i + j].lexema;
+					}
+					recipientEl = true;
 				}
+				else 
+				{
+					for (int j = -1; t.lextable.table[i + j].lexema != LEX_SEMICOLON; j++) // 
+					{
+						*stream << t.lextable.table[i + j].lexema;
+					}
+				}
+				
 				*stream << '\n';
 				int pos = 0;																		// позиция в строке
 				bool isArguments = false;															// флаг аргументов
-				IT::Entry* func, * save = nullptr;													// функция, сохранение
-				IT::Entry* recipent = &t.idtable.table[t.lextable.table[i - 1].idxTI];
+				bool waitForAdres = false;
+				bool waitForReturn = false;
+				IT::Entry* func, * save = nullptr;		
+				IT::Entry* recipient = &t.idtable.table[t.lextable.table[i - 1].idxTI];
+				IT::Entry* adres =&t.idtable.table[t.lextable.table[i - 2].idxTI];
+				IT::Entry* recipient1 = &t.idtable.table[t.lextable.table[i - 1].idxTI];
+				IT::Entry* adres1 = &t.idtable.table[t.lextable.table[i - 2].idxTI];
+				IT::Entry* recipient2 = &t.idtable.table[t.lextable.table[i - 1].idxTI];
+				IT::Entry* adres2 = &t.idtable.table[t.lextable.table[i - 2].idxTI];
+				if(recipientEl){
+					recipient = &t.idtable.table[t.lextable.table[i - 4].idxTI];
+				}
 				while (true)				
 				{
 					pos++;
 					if (t.lextable.table[i + pos].lexema == LEX_SEMICOLON || t.lextable.table[i + pos].lexema == '!') // 
 					{
-						if (recipent->iddatatype != IT::CHR)										// если не char
-						{
-							*stream << "pop " << recipent->id << '\n';								// то выталкиваем в переменную
+
+						if(!waitForReturn){
+							if (!recipientEl) {
+								if (recipient->iddatatype != IT::CHR)										// если не char
+								{
+									*stream << "pop " << recipient->id << '\n';								// то выталкиваем в переменную
+								}
+								else
+								{
+									*stream << "pop eax\nmov " << recipient->id << ", al" << '\n';			// иначе в eax
+								}
+							}
+							else
+							{
+								if (adres->idtype == IT::L) {
+									*stream << "pop " << recipient->id << "[" << adres->value.vint << "]" << '\n';
+								}
+								if (adres->idtype == IT::V) {
+									*stream << "push " << adres->id << '\n';
+									*stream << "pop eax" << '\n';
+									*stream << "pop " << recipient->id << "[eax]" << '\n';
+								}
+							}
 						}
-						else
+						else 
 						{
-							*stream << "pop eax\nmov " << recipent->id << ", al" << '\n';			// иначе в eax
+							*stream << '\n';
+							*stream << "mov " << recipient->id << ", eax ;результат функции";
+							*stream << '\n';
+							waitForAdres = false;
+						
 						}
 						break;
 					}
@@ -54,8 +100,43 @@ namespace CG {
 								break;
 							}
 							case (IT::INT): {
-								*stream << "push " << t.idtable.table[t.lextable.table[i + pos].idxTI].id << '\n';
+								if(!waitForAdres){
+									*stream << "push " << t.idtable.table[t.lextable.table[i + pos].idxTI].id << '\n';
+								}
+								else {
+									if (adres1 != adres2) {
+										adres2 = &t.idtable.table[t.lextable.table[i + pos].idxTI];
+										if (adres2->idtype == IT::L) {
+											*stream << "pop " << recipient2->id << "[" << adres2->value.vint << "]" << '\n';
+										}
+										if (adres2->idtype == IT::V) {
+											*stream << "push " << adres2->id << '\n';
+											*stream << "pop eax" << '\n';
+											*stream << "pop " << recipient2->id << "[eax]" << '\n';
+										}
+									}
+									else {
+										adres1 = &t.idtable.table[t.lextable.table[i + pos].idxTI];
+										if (adres1->idtype == IT::L) {
+											*stream << "pop " << recipient1->id << "[" << adres1->value.vint << "]" << '\n';
+										}
+										if (adres1->idtype == IT::V) {
+											*stream << "push " << adres1->id << '\n';
+											*stream << "pop eax" << '\n';
+											*stream << "pop " << recipient1->id << "[eax]" << '\n';
+										}
+									}
+								}
 								break;
+							}
+							case (IT::ARR): {
+								waitForAdres = true;
+								if (recipient1 != recipient2) {
+									recipient2 = &t.idtable.table[t.lextable.table[i + pos].idxTI];
+								}
+								else {
+									recipient1 = &t.idtable.table[t.lextable.table[i + pos].idxTI];
+								}
 							}
 							}
 							save = &t.idtable.table[t.lextable.table[i + pos].idxTI];
@@ -73,10 +154,9 @@ namespace CG {
 								*stream << ", " << t.idtable.table[t.lextable.table[i + pos].idxTI].id;
 								pos++;
 							}
-							*stream << '\n';
-							*stream << "push eax ;результат функции";
-							*stream << '\n';
+							waitForReturn = true;
 						}
+							
 					}
 					else if (t.lextable.table[i + pos].lexema == LEX_OPERATOR) {
 						*stream << "pop ebx" << '\n';
@@ -129,6 +209,20 @@ namespace CG {
 							*stream << "pop ecx" << '\n';
 							break;
 						}
+						case '&': {
+							*stream << "and eax, ebx" << '\n';
+							break;
+						}
+						case '|': {
+							*stream << "or eax, ebx" << '\n';
+							break;
+						}
+						case '^': {
+							*stream << "not ebx" << '\n';
+							*stream << "push ebx" << '\n';
+							*stream << "pop eax" << '\n';
+							break;
+						}
 
 						}
 						*stream << "push eax" << '\n';
@@ -137,18 +231,21 @@ namespace CG {
 			}
 			//разобрать ретурн
 			else if (t.lextable.table[i].lexema == LEX_RETURN) {
-				if (t.idtable.table[t.lextable.table[i + 1].idxTI].iddatatype == IT::CHR)
+				IT::Entry* result = &t.idtable.table[t.lextable.table[i + 1].idxTI];
+
+				if (result->iddatatype == IT::CHR)
 				{
-					*stream << "\nmovzx eax, " << t.idtable.table[t.lextable.table[i + 1].idxTI].id << '\n';
+					*stream << "\nmovzx eax, " << result->id << '\n';
 				}
 				else
 				{
-					*stream << "\nmov eax, " << t.idtable.table[t.lextable.table[i + 1].idxTI].id << '\n';
+					*stream << "\nmov eax, " << result->id << '\n';
 				}
 			}
 			//разобрать вывод
 			else if (t.lextable.table[i].lexema == LEX_PRINT) {
 				//pos++;
+				IT::Entry* recipient = &t.idtable.table[t.lextable.table[i + 1].idxTI];
 				switch (t.idtable.table[t.lextable.table[i + 1].idxTI].iddatatype)
 				{
 				case (IT::CHR): {
@@ -174,6 +271,22 @@ namespace CG {
 					*stream << t.idtable.table[t.lextable.table[i + 1].idxTI].id << '\n';
 					*stream << "CALL outputuint" << '\n';
 					break;
+				}
+				case (IT::ARR): {
+					if(t.idtable.table[t.lextable.table[i + 3].idxTI].idtype==IT::L){
+						*stream << "\npush ";
+						*stream << t.idtable.table[t.lextable.table[i + 1].idxTI].id << "[" << t.idtable.table[t.lextable.table[i + 3].idxTI].value.vint << "]" << '\n';
+						*stream << "CALL outputuint" << '\n';
+						break;
+					}
+					if (t.idtable.table[t.lextable.table[i + 3].idxTI].idtype == IT::V) {
+						*stream << "push " << t.idtable.table[t.lextable.table[i + 3].idxTI].id << '\n';
+						*stream << "pop eax" << '\n';
+						*stream << "\npush ";
+						*stream << t.idtable.table[t.lextable.table[i + 1].idxTI].id << "[eax]" << '\n';
+						*stream << "CALL outputuint" << '\n';
+						break;
+					}
 				}
 				}
 			}
@@ -232,7 +345,7 @@ namespace CG {
 						{
 							switch (t.lextable.table[i + pos].data)
 							{
-							case '$': { 
+							case '$': {
 								oper = "jne";
 								break;
 							}
@@ -298,7 +411,7 @@ namespace CG {
 			{
 				int pos = 1;
 				int st;
-				int whileNumber = 0;
+				int ifNumber = 0;
 				int leftSquareCount = 0;
 				bool getExpressionParams = true;
 				IT::Entry* firstId = nullptr, * secondId = nullptr;
@@ -310,8 +423,8 @@ namespace CG {
 					case LEX_LEFTHESIS: {
 						if (getExpressionParams)
 						{
-							whileNumber = i + salt;
-							*stream << "\nIf" << whileNumber << "Start: " << '\n';
+							ifNumber = i + salt;
+							*stream << "\nIf" << ifNumber << "Start: " << '\n';
 
 						}
 						break;
@@ -349,7 +462,7 @@ namespace CG {
 						{
 							switch (t.lextable.table[i + pos].data)
 							{
-							case '&': {
+							case '$': {
 								oper = "jne";
 								break;
 							}
@@ -360,12 +473,12 @@ namespace CG {
 							}
 
 							case '<': {
-								oper = "ja";//первый больше второго
+								oper = "ja";
 								break;
 							}
 
 							case '>': {
-								oper = "jl";//первый меньше второго
+								oper = "jl";
 								break;
 							}
 							}
@@ -373,7 +486,7 @@ namespace CG {
 						}break;
 					}
 
-					case LEX_LEFT_SQUAREBRACE: {
+					case LEX_LEFTBRACE: {
 						if (getExpressionParams)
 						{
 							if (firstId->iddatatype == IT::CHR)
@@ -385,7 +498,7 @@ namespace CG {
 							else
 								*stream << "mov ebx, " << secondId->id << '\n';
 							*stream << "cmp eax, ebx" << '\n';
-							*stream << oper << " If" << whileNumber << "End" << '\n';
+							*stream << oper << " If" << ifNumber << "End" << '\n';
 						}
 						getExpressionParams = false;
 						leftSquareCount++;
@@ -393,7 +506,7 @@ namespace CG {
 						break;
 					}
 
-					case LEX_RIGHT_SQUAREBRACE: {
+					case LEX_RIGHTBRACE: {
 						leftSquareCount--;
 						break;
 					}
@@ -404,7 +517,7 @@ namespace CG {
 
 						InvokeExpressions(stream, t, st, i + pos, salt + 1);
 						//*stream << "jmp If" << whileNumber << "Start" << '\n';
-						*stream << "If" << whileNumber << "End: " << '\n';
+						*stream << "If" << ifNumber << "End: " << '\n';
 						i += pos;
 						break;
 					}
@@ -455,7 +568,7 @@ namespace CG {
 							switch (t.idtable.table[t.lextable.table[t.idtable.table[i].idxfirstLE + pos].idxTI].iddatatype)
 							{
 							case IT::INT: {
-								*stream << " :DWORD ";
+								*stream << " :SDWORD ";
 								break;
 							}
 							case IT::CHR: {
@@ -475,7 +588,7 @@ namespace CG {
 				}
 			}
 		}
-		*stream << "\noutputuint PROTO :DWORD";
+		*stream << "\noutputuint PROTO :SDWORD";
 		*stream << "\noutputchar PROTO :BYTE";
 		*stream << "\noutputstr PROTO :DWORD\n";
 
@@ -527,6 +640,14 @@ namespace CG {
 				}
 				case IT::STR: {
 					*stream << " DWORD 0 ;STR";
+					break;
+				}
+				case IT::ARR: {
+					*stream << " SDWORD ";
+					for (int j = 0; j < t.idtable.table[i].value.varr.len-1; j++) {
+						*stream << " 0,";
+					}
+					*stream << " 0 ;ARR";
 					break;
 				}
 				}

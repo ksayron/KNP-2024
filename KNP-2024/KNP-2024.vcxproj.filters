@@ -40,10 +40,10 @@
     <ClCompile Include="Parm.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="PolishNotation.cpp">
+    <ClCompile Include="Semantic.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Semantic.cpp">
+    <ClCompile Include="PolishNotation.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
@@ -87,10 +87,10 @@
     <ClInclude Include="Parm.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="PolishNotation.h">
+    <ClInclude Include="Semantic.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Semantic.h">
+    <ClInclude Include="PolishNotation.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
@@ -108,6 +108,9 @@
       <Filter>Файлы ресурсов</Filter>
     </Text>
     <Text Include="in2.txt">
+      <Filter>Файлы ресурсов</Filter>
+    </Text>
+    <Text Include="in3.txt">
       <Filter>Файлы ресурсов</Filter>
     </Text>
   </ItemGroup>

@@ -157,7 +157,7 @@ namespace Log //работа с протоколом
 				type = "Variable";
 				break;
 			case IT::F:
-				type = "Actio ";
+				type = "Action";
 				break;
 			case IT::L:
 				type = "Literal";
@@ -185,6 +185,13 @@ namespace Log //работа с протоколом
 			case IT::CHR:
 				datatype = "Symbol";
 				data = b.value.vchar;
+				break;
+			case IT::ARR:
+				datatype = "Array";
+				buff = new char[10];
+				_itoa(b.value.varr.len, buff, 10);
+				data = buff;
+				delete[]buff;
 				break;
 
 			}

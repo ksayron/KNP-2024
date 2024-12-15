@@ -43,4 +43,25 @@ namespace FST
 	};
 	bool execute(FST& fst); //выполнить автомат
 	void LexAnalyzer(In::IN in, Out::OUT out, Log::LOG log, LT::LexTable& a, IT::IdTable& b); //анализатор лексем
+
+	struct libfuncs { 
+	std::string name;
+	IT::IDDATATYPE params[255];
+	int parcount = 0;
+	IT::IDDATATYPE retval;
+	};
+
+	struct Checker {
+		FST* chain;
+		IT::IDDATATYPE iddatatype;
+
+		char lexName;
+		Checker(FST* f, char c, IT::IDDATATYPE t) {
+			chain = f;
+			lexName = c;
+			iddatatype = t;
+		}
+	};
+
 }
+

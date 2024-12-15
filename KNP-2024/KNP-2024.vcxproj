@@ -138,9 +138,9 @@
     <ClCompile Include="Log.cpp" />
     <ClCompile Include="LT.cpp" />
     <ClCompile Include="MFST.cpp" />
-    <ClCompile Include="PolishNotation.cpp" />
     <ClCompile Include="Out.cpp" />
     <ClCompile Include="Parm.cpp" />
+    <ClCompile Include="PolishNotation.cpp" />
     <ClCompile Include="Semantic.cpp" />
     <ClCompile Include="KNP-2024.cpp" />
   </ItemGroup>
@@ -156,15 +156,16 @@
     <ClInclude Include="Log.h" />
     <ClInclude Include="LT.h" />
     <ClInclude Include="MFST.h" />
-    <ClInclude Include="PolishNotation.h" />
     <ClInclude Include="Out.h" />
     <ClInclude Include="Parm.h" />
+    <ClInclude Include="PolishNotation.h" />
     <ClInclude Include="Semantic.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="in.txt" />
     <Text Include="in.txt.log" />
     <Text Include="in2.txt" />
+    <Text Include="in3.txt" />
     <Text Include="log.txt" />
     <Text Include="Разбор ошибок.txt" />
   </ItemGroup>

@@ -1,27 +1,5 @@
 ﻿D:\Soft\Visual Studio\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(531,5): warning MSB8028: промежуточный каталог (Debug\) содержит файлы, которые используются совместно с другим проектом (TDS-2022.vcxproj).  Это может привести к ошибкам очистки и перестроения.
-  CodeExectuion.cpp
-  CodeGeneration.cpp
-D:\BSTU\Projects\KNP-2024\KNP-2024\CodeGeneration.cpp(21,16): warning C4101: func: неиспользованная локальная переменная
-D:\BSTU\Projects\KNP-2024\KNP-2024\CodeGeneration.cpp(620,14): warning C4129: "e": нераспознанная escape-последовательность символов
-  Error.cpp
   FST.cpp
-D:\BSTU\Projects\KNP-2024\KNP-2024\FST.cpp(118,16): warning C4267: инициализация: преобразование из "size_t" в "short"; возможна потеря данных
-D:\BSTU\Projects\KNP-2024\KNP-2024\FST.cpp(1404,26): warning C4018: <: несоответствие типов со знаком и без знака
-  GRB.cpp
-  In.cpp
-D:\BSTU\Projects\KNP-2024\KNP-2024\In.cpp(22,13): warning C4244: инициализация: преобразование "std::streamoff" в "int", возможна потеря данных
-  IT.cpp
-D:\BSTU\Projects\KNP-2024\KNP-2024\IT.cpp(53,22): warning C4018: <: несоответствие типов со знаком и без знака
-D:\BSTU\Projects\KNP-2024\KNP-2024\IT.cpp(160,22): warning C4018: <: несоответствие типов со знаком и без знака
-  Log.cpp
-  LT.cpp
-  MFST.cpp
-  PolishNotation.cpp
-  Out.cpp
-  Parm.cpp
-D:\BSTU\Projects\KNP-2024\KNP-2024\Parm.cpp(20,11): warning C4101: wst: неиспользованная локальная переменная
-  Semantic.cpp
-  KNP-2024.cpp
-  Создание кода...
-  LINK : не найден или не выполнена сборка D:\BSTU\Projects\KNP-2024\Debug\KNP-2024.exe при последней инкрементной компоновке; выполняется полная компоновка
+D:\BSTU\Projects\KNP-2024\KNP-2024\FST.cpp(113,16): warning C4267: инициализация: преобразование из "size_t" в "short"; возможна потеря данных
+D:\BSTU\Projects\KNP-2024\KNP-2024\FST.cpp(1423,26): warning C4018: <: несоответствие типов со знаком и без знака
   KNP-2024.vcxproj -> D:\BSTU\Projects\KNP-2024\Debug\KNP-2024.exe

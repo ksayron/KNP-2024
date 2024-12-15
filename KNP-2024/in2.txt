@@ -1,9 +1,18 @@
 
 main
 {
-	declare num number;  #comment
-	number = -11;
-	write number;
+	extern str action Copy(str cop);
+	extern num action GetSize(str result);
+
+	declare num size;
+	declare str line1;
+	line1 = "test";
+	write line1;
+	size = GetSize(line1);
+	write size;
+	declare str line2;
+	line2 = Copy(line1);
+	write line2;
 
 	
 	return 0;

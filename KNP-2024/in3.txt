@@ -1,0 +1,18 @@
+main
+{	
+	declare num result;
+	declare array number[5];
+	declare num calc;
+	calc = 3;
+	number[calc]=4;
+	write number[3];
+	write number[calc];
+	result = number[calc]+4;
+	write result;
+	
+	
+
+
+
+	return 0;
+}

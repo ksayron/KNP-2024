@@ -31,7 +31,11 @@ namespace Semantic {
 								datatype = t.idtable.table[t.lextable.table[i + pos].idxTI].iddatatype;
 							else
 								if (datatype != t.idtable.table[t.lextable.table[i + pos].idxTI].iddatatype)
-									throw ERROR_THROW_IN(704, t.lextable.table[i + pos].sn, t.lextable.table[i + pos].cn)
+								{
+									if (!((datatype == 1 && t.idtable.table[t.lextable.table[i + pos].idxTI].iddatatype == IT::ARR) || (datatype == 4 && t.idtable.table[t.lextable.table[i + pos].idxTI].iddatatype == IT::INT))) {
+										throw ERROR_THROW_IN(704, t.lextable.table[i + pos].sn, t.lextable.table[i + pos].cn)
+									}
+								}
 
 									//если функция то пропускай gfhfvtnhs aeyrwbb
 									if (t.idtable.table[t.lextable.table[i + pos].idxTI].idtype == IT::F) {

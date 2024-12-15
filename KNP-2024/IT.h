@@ -1,19 +1,18 @@
 ﻿#pragma once
 
-#define ID_MAXSIZE		26			//макс кол-во символов в идентиф
-#define ID_CURRENT_MAXSIZE		10 //макс кол-во символов в идентиф
+#define ID_MAXSIZE		25			//макс кол-во символов в идентиф
+#define ID_CURRENT_MAXSIZE		14 //макс кол-во символов в идентиф
 
 #define	TI_MAXSIZE		4096 //макс кол-во строк в табл идентификаторов
-#define TI_INT_DEFAULT	0x00000000	//значение int по дефолту
-#define	TI_STR_DEFAULT	0x00		//значение string по дефолту
 #define	TI_NULLIDX		0xffffffff	//нет элемента таблицы идентификаторов
 #define	TI_STR_MAXSIZE	255
+#define	TI_ARR_MAXSIZE	1000
 
-#define NULLNUMBER 17	//используй как нуль
+#define NULLNUMBER 6	//используй как нуль
 
 namespace IT	//таблица идентификаторов
 {
-	enum IDDATATYPE { INT = 1, STR = 2, CHR = 3, BOOL = 4 };//таблица данных идентификаторов fls - empty
+	enum IDDATATYPE { INT = 1, STR = 2, CHR = 3, ARR = 4 };//таблица данных идентификаторов fls - empty
 	enum IDTYPE { V = 1, F = 2, P = 3, L = 4 };//типы идентификаторов - переменная функция параметр литерал
 
 	struct Entry //строка таблицы идентификаторов
@@ -24,14 +23,21 @@ namespace IT	//таблица идентификаторов
 		IDDATATYPE iddatatype; //тип данных
 		IDTYPE idtype; //тип идентификатора
 		union {
-			unsigned int vint; //значение integer
-			char vchar;//значение sting
+			int vint; //значение integer
+			char vchar;//значение char
 			struct
 			{
 				char len;//кол-во символов в string
 				char* str;// [TI_STR_MAXSIZE] ;//символы стринг
 			} vstr;//значение sting
-		} value; //значение идентификатора
+			struct
+			{
+				int len;//кол-во элементов
+				int els[TI_ARR_MAXSIZE];//элементы массива
+			} varr;//значение массива
+		} value; //значение идентификатора		
+
+
 		Entry(int idxfirstLE, const char* id, IDDATATYPE iddatatype, IDTYPE idtype, bool e = false) {
 			this->isExternal = e;
 			this->idxfirstLE = idxfirstLE;
@@ -50,9 +56,14 @@ namespace IT	//таблица идентификаторов
 				this->value.vstr.len = 0;
 				this->value.vstr.str = nullptr;
 			}
+			if (iddatatype == ARR)
+			{
+				this->value.varr.len = 0;
+				for (int i = 0; i < 1000; i++) {
+					this->value.varr.els[i] = 0;
+				}
+			}
 
-
-#pragma region "Writedown id name"
 			int len = 0;
 			for (int i = 0; id[i] != '\0' && i < ID_MAXSIZE; i++)
 			{
@@ -65,7 +76,6 @@ namespace IT	//таблица идентификаторов
 			{
 				this->id[len] = '\0';
 			}
-#pragma endregion
 
 		};
 		Entry(int idxfirstLE, const char* id, IDDATATYPE iddatatype, IDTYPE idtype, int data, bool e = false) {
@@ -73,8 +83,13 @@ namespace IT	//таблица идентификаторов
 			this->idxfirstLE = idxfirstLE;
 			this->iddatatype = iddatatype;
 			this->idtype = idtype;
-			this->value.vint = data;
-#pragma region "Writedown id name"
+			if(iddatatype == IT::INT){
+				this->value.vint = data;
+			}
+			if (iddatatype == IT::ARR) {
+				this->value.varr.len = data;
+			}
+
 			int len = 0;
 			for (int i = 0; id[i] != '\0' && i < ID_MAXSIZE; i++)
 			{
@@ -87,7 +102,7 @@ namespace IT	//таблица идентификаторов
 			{
 				this->id[len] = '\0';
 			}
-#pragma endregion
+
 
 		};
 		Entry(int idxfirstLE, const char* id, IDDATATYPE iddatatype, IDTYPE idtype, char data, bool e = false) {
@@ -95,7 +110,7 @@ namespace IT	//таблица идентификаторов
 			this->idxfirstLE = idxfirstLE;
 			this->iddatatype = iddatatype;
 			this->idtype = idtype;
-#pragma region "Writedown id name"
+
 			int len = 0;
 			for (int i = 0; id[i] != '\0' && i < ID_MAXSIZE; i++)
 			{
@@ -108,30 +123,16 @@ namespace IT	//таблица идентификаторов
 			{
 				this->id[len] = '\0';
 			}
-#pragma endregion
+
 
 			this->value.vchar = data;
-			//if (len > TI_STR_MAXSIZE)
-			//{
-			//	//error
-			//	//std::cout << "TI STR MAXSIZE ERROR" << std::endl;
-			//}
-			//else
-			//{
-			//	//this->value.vstr.str = new char[len];
-			//	for (int i = 1; i < len; i++)
-			//	{
-			//		this->value.vstr.str[i - 1] = data[i];
-			//	}
-			//	this->value.vstr.str[len - 1] = '\0';
-			//}
 		};
 		Entry(int idxfirstLE, const char* id, IDDATATYPE iddatatype, IDTYPE idtype, char* data, bool e = false) {
 			this->isExternal = e;
 			this->idxfirstLE = idxfirstLE;
 			this->iddatatype = iddatatype;
 			this->idtype = idtype;
-#pragma region "Writedown id name"
+
 			int len = 0;
 			for (int i = 0; id[i] != '\0' && i < ID_MAXSIZE; i++)
 			{
@@ -144,7 +145,6 @@ namespace IT	//таблица идентификаторов
 			{
 				this->id[len] = '\0';
 			}
-#pragma endregion
 
 			len = 0;
 			for (int i = 1; data[i] != '\"'; i++)
@@ -188,7 +188,7 @@ namespace IT	//таблица идентификаторов
 	int IsLX(
 		IdTable& idtable,	//возврат: номер строки(если есть) TI_NULLID(если нет)
 		IDDATATYPE type,
-		unsigned int data
+		int data
 	);
 	int IsLX(
 		IdTable& idtable,	//возврат: номер строки(если есть) TI_NULLID(если нет)

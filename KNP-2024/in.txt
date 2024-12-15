@@ -1,33 +1,77 @@
-declare num action counter(num count){
-	write count;
-	while(count>0){
-	write count;
-	count = count - 1;
-	};
-	return count;
+declare num action sum(num first,num second){
+	declare num result;
+	result = first+second;
+	return result;
 };
 
-
 main
-{
+{	
+	extern num action Random(num max);
+	extern num action Compare(str str1,str str2);
+	extern num action GetSize(str string);
+	extern str action Copy(str string);
+	extern num action ctn(symb char);
+	extern symb action ntc(num numb);
 	declare num number;  #comment
+	
 	number = -11;
-	write number;
-	if(number > 5){
-	write number;
+	if(number ! 5){
 	write "If works";
-	}
-	number = counter(5);
-	declare symb symbol;
-	symbol = 'q';
-
-	write "Symbol";
-	write symbol;
-	write "is new";
+	};
+	if(number == 5){
+	write "If doesn't work";
+	};
 
 	declare str line;
-	line = "Hello, World!";
+	line = "Random:";
 	write line;
+	declare array massiv[10];
+	declare num i;
+	i = 0;
+	until( i ! 10){
+	massiv[i] = i;
+	write massiv[i];
+	i = i + 1;
+	};
+
+	number = sum(5,4);
+	write number;
+	number = 0x45;
+	write number;
+	number = Random(50);
+	write number;
+
+	declare str greet;
+	greet="Hello, World!";
+	write greet;
+
+	write "Длина:";
+	declare num comp;
+	comp = GetSize(greet);
+	write comp;
 	
+	
+	write greet;
+	declare str greet2;
+	greet2 = Copy(greet);
+	write greet2;
+
+
+	comp = Compare(greet,greet2);
+	if(comp==0){
+	write "Строки одинаковы";
+	};
+	if(comp==1){
+	write "Первая строка больше";
+	};
+	if(comp==2){
+	write "Вторая строка больше";
+	};
+	
+	
+	
+	
+
+
 	return 0;
 }
