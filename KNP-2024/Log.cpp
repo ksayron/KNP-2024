@@ -169,7 +169,7 @@ namespace Log //работа с протоколом
 			switch (b.iddatatype) {
 			case IT::INT:
 				datatype = "Number";
-				buff = new char[10];
+				buff = new char[100];
 				_itoa(b.value.vint, buff, 10);
 				data = buff;
 				delete[]buff;

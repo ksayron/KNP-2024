@@ -5,11 +5,12 @@ main
 	declare num calc;
 	calc = 3;
 	number[calc]=4;
+	write calc;
 	write number[3];
 	write number[calc];
-	result = number[calc]+4;
-	write result;
-	
+	calc = -2147483649;
+	write calc;
+
 	
 
 

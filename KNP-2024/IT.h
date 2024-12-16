@@ -23,8 +23,9 @@ namespace IT	//таблица идентификаторов
 		IDDATATYPE iddatatype; //тип данных
 		IDTYPE idtype; //тип идентификатора
 		union {
-			int vint; //значение integer
+			long vint; //значение integer
 			char vchar;//значение char
+
 			struct
 			{
 				char len;//кол-во символов в string
@@ -32,7 +33,7 @@ namespace IT	//таблица идентификаторов
 			} vstr;//значение sting
 			struct
 			{
-				int len;//кол-во элементов
+				long len;//кол-во элементов
 				int els[TI_ARR_MAXSIZE];//элементы массива
 			} varr;//значение массива
 		} value; //значение идентификатора		

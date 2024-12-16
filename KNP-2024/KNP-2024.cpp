@@ -8,6 +8,7 @@
 #include "Log.h"
 #include "In.h"
 #include "FST.h"
+#include "LexAnalyzer.h"
 #include "IT.h"
 #include "Semantic.h"
 #include "PolishNotation.h"
@@ -41,19 +42,27 @@ int _tmain(int argc, _TCHAR* argv[])
 		// лексический анализатор
 		FST::LexAnalyzer(in, out, log, tables.lextable, tables.idtable);
 
-		if (parm.showTables)Log::LogTables(log, tables); // вывод таблиц в лог
-		if (parm.showITables)Log::LogIDTables(log, tables); // вывод таблиц идентификаторов в лог
+		if (parm.showTables) {
+			Log::LogTables(log, tables);
+		}// вывод таблиц в лог
+		if (parm.showITables) {
+			Log::LogIDTables(log, tables);
+		} // вывод таблиц идентификаторов в лог
 		Log::WriteLine(log, "--------Конец лексического анализа--------", "");
 
 		Log::WriteLine(log, "--------Начало синтаксического анализа--------", "");
-		if (parm.showMfst)MFST_TRACE_START(log);
+		if (parm.showMfst) {
+			MFST_TRACE_START(log);
+		}
 		MFST::Mfst mfst(tables, GRB::getGreibach(), parm.showMfst);
 		if (!mfst.start(log))
 		{
 			throw ERROR_THROW(600);
 		}
 		mfst.savededucation();
-		mfst.printrules(log);
+		if(parm.showMfst){
+			mfst.printrules(log);
+		}
 		Log::WriteLine(log, "--------Конец синтаксического анализа--------", "");
 
 		Log::WriteLine(log, "--------Начало семантического анализа--------", "");

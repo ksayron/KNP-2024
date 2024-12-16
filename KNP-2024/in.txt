@@ -21,11 +21,11 @@ main
 	if(number == 5){
 	write "If doesn't work";
 	};
-
+		declare array massiv[10];
 	declare str line;
 	line = "Random:";
 	write line;
-	declare array massiv[10];
+
 	declare num i;
 	i = 0;
 	until( i ! 10){
@@ -33,6 +33,10 @@ main
 	write massiv[i];
 	i = i + 1;
 	};
+
+	write "element";
+	massiv[1]=5; 
+	write massiv[1];
 
 	number = sum(5,4);
 	write number;

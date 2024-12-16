@@ -18,7 +18,6 @@ void compileAndRunAssemblyFile(wchar_t* asmFileName) {
 
 
 
-    // Execute the commands in Visual Studio Developer Command Prompt
     std::wcout << L"\n\n Код " << name << L" запущен";
     ShellExecute(NULL, L"open", L"cmd.exe", launch.c_str(), NULL, SW_SHOWNORMAL);
 }

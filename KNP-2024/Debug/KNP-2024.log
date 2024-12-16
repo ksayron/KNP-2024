@@ -1,5 +1,8 @@
 ﻿D:\Soft\Visual Studio\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(531,5): warning MSB8028: промежуточный каталог (Debug\) содержит файлы, которые используются совместно с другим проектом (TDS-2022.vcxproj).  Это может привести к ошибкам очистки и перестроения.
   FST.cpp
 D:\BSTU\Projects\KNP-2024\KNP-2024\FST.cpp(113,16): warning C4267: инициализация: преобразование из "size_t" в "short"; возможна потеря данных
-D:\BSTU\Projects\KNP-2024\KNP-2024\FST.cpp(1423,26): warning C4018: <: несоответствие типов со знаком и без знака
+  LexAnalyzer.cpp
+D:\BSTU\Projects\KNP-2024\KNP-2024\LexAnalyzer.cpp(1309,26): warning C4018: <: несоответствие типов со знаком и без знака
+  KNP-2024.cpp
+  Создание кода...
   KNP-2024.vcxproj -> D:\BSTU\Projects\KNP-2024\Debug\KNP-2024.exe

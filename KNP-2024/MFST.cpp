@@ -60,16 +60,22 @@ namespace MFST
 					(nrulechain = rule.getNextChain(lenta[lenta_position], chain, nrulechain + 1));
 					if (nrulechain >= 0)
 					{
-						if (shallWrite)MFST_TRACE1(log);
+						if (shallWrite) {
+							MFST_TRACE1(log);
+						}
 						savestate(log);
 						st.pop();
 						push_chain(chain);
 						rc = NS_OK;
-						if (shallWrite)MFST_TRACE2(log);
+						if (shallWrite) {
+							MFST_TRACE2(log);
+						}
 					}
 					else
 					{
-						if (shallWrite)MFST_TRACE4(log, "TNS_NORULECHAIN/NS_NORULE")
+						if (shallWrite) {
+							MFST_TRACE4(log, "TNS_NORULECHAIN/NS_NORULE");
+						}
 							savediagnosis(NS_NORULECHAIN); rc = reststate(log) ? NS_NORULECHAIN : NS_NORULE;
 					};
 				}
@@ -78,15 +84,22 @@ namespace MFST
 			else if ((st.top() == lenta[lenta_position]))
 			{
 				lenta_position++; st.pop(); nrulechain = -1; rc = TS_OK;
-				if (shallWrite)MFST_TRACE3(log);
+				if (shallWrite) {
+					MFST_TRACE3(log);
+				}
 			}
 			else {
-				if (shallWrite)MFST_TRACE4(log, "TS_NOK/NS_NORULECHAIN")
+				if (shallWrite) {
+					MFST_TRACE4(log, "TS_NOK/NS_NORULECHAIN")
+				}
 					rc = reststate(log) ? TS_NOK : NS_NORULECHAIN;
 			};
 		}
 		else {
-			rc = LENTA_END; if (shallWrite)MFST_TRACE4(log, "LENTA_END")
+			rc = LENTA_END;
+			if (shallWrite) {
+				MFST_TRACE4(log, "LENTA_END");
+			}
 		}
 		return rc;
 	}
@@ -99,7 +112,9 @@ namespace MFST
 
 	bool Mfst::savestate(const Log::LOG& log) {
 		storestate.push(MfstState(lenta_position, st, nrule, nrulechain));
-		if (shallWrite)MFST_TRACE6(log, "SAVESTATE:", storestate.size());
+		if (shallWrite) {
+			MFST_TRACE6(log, "SAVESTATE:", storestate.size());
+		}
 		return true;
 	};
 
@@ -114,8 +129,12 @@ namespace MFST
 			nrule = state.nrule;
 			nrulechain = state.nrulechain;
 			storestate.pop();
-			if (shallWrite)MFST_TRACE5(log, "RESSTATE")
-				if (shallWrite)MFST_TRACE2(log)
+			if (shallWrite) {
+				MFST_TRACE5(log, "RESSTATE");
+			}
+			if (shallWrite) {
+				MFST_TRACE2(log);
+				}
 		}
 		return rc;
 	};
@@ -142,23 +161,35 @@ namespace MFST
 			rc_step = step(log);
 		switch (rc_step)
 		{
-		case LENTA_END:         if (shallWrite)MFST_TRACE4(log, "------>LENTA_END")
-			* log.stream << "-------------------------------------------------------------------------------------" << std::endl;
+		case LENTA_END:         if (shallWrite) {
+			MFST_TRACE4(log, "------>LENTA_END")
+				* log.stream << "-------------------------------------------------------------------------------------" << std::endl;
 			sprintf_s(buf, MFST_DIAGN_MAXSIZE, "%d:всего строк %d, синтаксический анализ выполнен без ошибок ", 0, lenta_size);
 			*log.stream << std::setw(4) << std::left << 0 << ":всего строк " << lenta_size << ", синтаксический анализ выполнен без ошибок " << std::endl;
-			rc = true;
+			
+		}
+					  rc = true;
 			break;
-		case NS_NORULE:         if (shallWrite)MFST_TRACE4(log, "------>NS_NORULE")
+		case NS_NORULE:         if (shallWrite)
+			{ MFST_TRACE4(log, "------>NS_NORULE")
 			* log.stream << "-------------------------------------------------------------------------------------" << std::endl;
 			*log.stream << getDiagnosis(0, buf) << std::endl;
 			*log.stream << getDiagnosis(1, buf) << std::endl;
-			*log.stream << getDiagnosis(2, buf) << std::endl;
+			*log.stream << getDiagnosis(2, buf) << std::endl; }
 			break;
-		case NS_NORULECHAIN:       if (shallWrite)MFST_TRACE4(log, "------>NS_NORULECHAIN")
+		case NS_NORULECHAIN:       if (shallWrite) {
+			MFST_TRACE4(log, "------>NS_NORULECHAIN")
+		}
 			break;
-		case NS_ERROR:             if (shallWrite)MFST_TRACE4(log, "------>NS_ERROR")
+		case NS_ERROR:             
+			if (shallWrite) {
+				MFST_TRACE4(log, "------>NS_ERROR")
+			}
 			break;
-		case SURPRISE:             if (shallWrite)MFST_TRACE4(log, "------>SURPRISE")
+		case SURPRISE:			
+			if (shallWrite) {
+			MFST_TRACE4(log, "------>SURPRISE")
+		}
 			break;
 		};
 		return rc;
