@@ -10,7 +10,7 @@
 #include <cstdarg>
 #include "time.h"
 
-namespace Log //работа с протоколом
+namespace Log 
 {
 	LOG getlog(wchar_t logfile[])
 	{

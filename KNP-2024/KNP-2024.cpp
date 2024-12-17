@@ -80,7 +80,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		Log::WriteLine(log, "--------Код успешно сгенерирован--------", "");
 
 
-		compileAndRunAssemblyFile(parm.out);
+		Execute(parm.out);
 
 	}
 	catch (Error::ERROR e)

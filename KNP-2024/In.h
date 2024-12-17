@@ -265,6 +265,7 @@ IN::F,/**/\
 }
 
 
+
 namespace In
 {
 	struct lexem
@@ -274,19 +275,18 @@ namespace In
 		unsigned char* lexem;
 	};
 
-	struct IN //исходные данные
+	struct IN 
 	{
-		//D = double comma O - octotorp, comment
-		enum { T = 1024, F = 2048, L = 256, C = 128, N = 64, D = 32, I = 16, S = 0 }; //S - space t - допустимый символ F- недопустимый, C-comma, L - Single lexem
-		int size;		//размер исходного кода
-		int lines;		//количество строк
-		int ignor;		//кол-во проигнорированных символов
-		//unsigned char* text;		
-		//int code[256];		//таблица проверки T, F, I новое значение
+		
+		enum { T = 1024, F = 2048, L = 256, C = 128, N = 64, D = 32, I = 16, S = 0 }; 
+		int size;		
+		int lines;		
+		int ignor;		
+		
 
-		std::list<lexem> lexems;//Исходный код (Windows - 1251)
+		std::list<lexem> lexems;
 
 	};
 
-	IN getin(wchar_t infile[]);  //ввести и проверить входной поток
+	IN getin(wchar_t infile[]);  
 }

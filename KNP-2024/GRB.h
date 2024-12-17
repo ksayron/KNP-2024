@@ -69,18 +69,18 @@ std::cout<<std::setw(4)<<std::left<<state.lenta_position<<": "\
 
 namespace GRB
 {
-	struct Rule								//правило в грамматике Грейбах
+	struct Rule								
 	{
-		GRBALPHABET  nn;					//нетерминал(левый символ правила) <0
-		int iderror; 					    //идентификатор ошибки
-		short size;							//количество цепочек - правых частей правила
-		struct Chain						// цепочка - правая часть правила
+		GRBALPHABET  nn;					
+		int iderror; 					   
+		short size;							
+		struct Chain						
 		{
-			short size;						//размер цепочки
+			short size;						
 			GRBALPHABET* nt;
 			Chain() { size = 0; nt = 0; };
-			Chain(short psize, GRBALPHABET s, ...);		//psize- количество символов в цепочке ,	s- символ терминал или нетерминал
-			char* getCChain(char* b);					//получить правую сторону правила
+			Chain(short psize, GRBALPHABET s, ...);		
+			char* getCChain(char* b);					
 			static GRBALPHABET T(char t) { return GRBALPHABET(t); }
 			static GRBALPHABET N(char n) { return -GRBALPHABET(n); };
 			static bool isT(GRBALPHABET s) { return s > 0; }
@@ -101,8 +101,8 @@ namespace GRB
 		Rule* rules;
 		Greibach() { size = 0; startN = 0; stbottomT = 0; rules = 0; };
 		Greibach(GRBALPHABET pstartN, GRBALPHABET pstbootomT, short psize, Rule r, ...);
-		short getRule(GRBALPHABET pnn, Rule& prule);											//получить правило  возвращает номер правила или -1  pnn-левый символ правила  prule - возвращаемое правило граматики
-		Rule getRule(short n);																	//получить правило по номеру
+		short getRule(GRBALPHABET pnn, Rule& prule);											
+		Rule getRule(short n);																	
 	};
-	Greibach getGreibach(); //получить грамматику Грейбах
+	Greibach getGreibach(); 
 };

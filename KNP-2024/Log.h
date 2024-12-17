@@ -5,23 +5,23 @@
 #include "LEX.h"
 #include "Error.h"
 
-namespace Log //работа с протоколом
+namespace Log 
 {
-	struct LOG //протокол
+	struct LOG 
 	{
-		wchar_t logfile[PARM_MAX_SIZE]; //имя файла протокола
-		std::ofstream* stream;			//входной поток протокола
+		wchar_t logfile[PARM_MAX_SIZE];
+		std::ofstream* stream;			
 	};
 
-	static const LOG INITLOG = { L"",NULL };		//структура для начальной инициализации LOG
-	LOG getlog(wchar_t logfile[]);					// сформировать структуру LOG
-	void WriteLine(LOG log, const char* c, ...); //вывести в протокол конкатенацию строк
+	static const LOG INITLOG = { L"",NULL };		
+	LOG getlog(wchar_t logfile[]);					
+	void WriteLine(LOG log, const char* c, ...);
 
-	void WriteLog(LOG log); //вывести в протокол заголовок
-	void WriteParm(LOG log, Parm::PARM parm); //вывести в протокол информацию о входных параметрах
-	void WriteIn(LOG log, In::IN in); //вывести в протокол информацию о входном потоке
-	void WriteError(LOG log, Error::ERROR error); //вывести в протокол информацию об ошибке
-	void LogTables(LOG log, LEX::LEX t); //Вывод таблиц лексем
-	void LogIDTables(LOG log, LEX::LEX t); //Вывод таблиц идентификаторов
-	void Close(LOG log); //закрыть протокол
+	void WriteLog(LOG log); 
+	void WriteParm(LOG log, Parm::PARM parm); 
+	void WriteIn(LOG log, In::IN in); 
+	void WriteError(LOG log, Error::ERROR error); 
+	void LogTables(LOG log, LEX::LEX t);
+	void LogIDTables(LOG log, LEX::LEX t); 
+	void Close(LOG log); 
 }

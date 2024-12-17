@@ -21,9 +21,9 @@ namespace LT
 		return out;
 	}
 
-	void Add(	//добавить строку в таблицу лексем
-		LexTable& lextable,		//экземпляр таблицы лексем
-		Entry entry	//строка таблицы лексем
+	void Add(	
+		LexTable& lextable,		
+		Entry entry	
 	)
 	{
 		if (lextable.size + 1 > lextable.maxsize)
@@ -31,9 +31,9 @@ namespace LT
 		lextable.table[lextable.size++] = entry;
 	}
 
-	Entry GetEntry(	//получить строку таблицы лексем
-		LexTable& lextable, //экземпляр
-		int n //номер получаемой строки
+	Entry GetEntry(	
+		LexTable& lextable, 
+		int n
 	)
 	{
 		if (lextable.size > lextable.maxsize)

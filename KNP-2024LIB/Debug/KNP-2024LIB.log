@@ -1,5 +1,6 @@
 ﻿  KNP-2024LIB.cpp
-D:\BSTU\Projects\KNP-2024\KNP-2024LIB\KNP-2024LIB.cpp(28,13): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+D:\BSTU\Projects\KNP-2024\KNP-2024LIB\KNP-2024LIB.cpp(36,13): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
   (компиляция исходного файла "/KNP-2024LIB.cpp")
   
+D:\BSTU\Projects\KNP-2024\KNP-2024LIB\KNP-2024LIB.cpp(45,1): warning C4172: возвращаемый адрес локальной переменной или временного : buf
   KNP-2024LIB.vcxproj -> D:\BSTU\Projects\KNP-2024\Debug\KNP-2024LIB.lib

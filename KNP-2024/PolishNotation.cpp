@@ -1,5 +1,4 @@
-//polish
-//получить приотритет для польской нотации
+
 #include <stack>
 #include <vector>
 #include <iostream>
@@ -77,7 +76,7 @@ namespace PolishNotation {
 		int size = length - str.size();
 		for (size_t i = 0; i < size; i++) {
 			lextable.table[temp + i].idxTI = LT_TI_NULLIDX;
-			lextable.table[temp + i].lexema = '!';
+			lextable.table[temp + i].lexema = '';
 			lextable.table[temp + i].sn = -1;
 		}
 	}
@@ -133,13 +132,7 @@ namespace PolishNotation {
 				stack.push(lexem);
 				break;
 			}
-			case LEX_LEFT_SQUAREBRACE:
-			{
-				square_counter++;
-				stack.push(lexem);
-				isArrEl = true;
-				break;
-			}
+			
 			case LEX_RIGHTHESIS:
 			{
 				right_counter++;
@@ -157,9 +150,17 @@ namespace PolishNotation {
 				}
 				break;
 			}
-			case LEX_RIGHT_SQUAREBRACE: {
+			case LEX_LEFT_SQUAREBRACE:
+			{
+				square_counter++;
+				PolishString += lexem;
+				isArrEl = true;
+				break;
+			}
+			case LEX_RIGHT_SQUAREBRACE: 
+			{
 				square_counter--;
-				stack.push(lexem);
+				PolishString += lexem;
 				isArrEl = false;
 				break;
 			}
@@ -194,7 +195,9 @@ namespace PolishNotation {
 			}
 			case LEX_LITERAL: {
 				if (std::find(stack.c.begin(), stack.c.begin(), '@') != stack.c.end())
+				{
 					params_counter++;
+				}
 				PolishString += lexem;
 				if (lextable.table[i].idxTI != LT_TI_NULLIDX)
 					ids.push_back(lextable.table[i].idxTI);
@@ -221,5 +224,6 @@ namespace PolishNotation {
 				t.lextable.table[i].data = t.lextable.table[i].lexema;
 				t.lextable.table[i].lexema = LEX_OPERATOR;
 			}
+
 	}
 }

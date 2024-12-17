@@ -6,14 +6,14 @@ namespace CG {
 	{
 		for (int i = start; i < end; i++)
 		{
-			//разобрать строку выражения
+			
 			if (t.lextable.table[i].lexema == LEX_EQUAL && t.lextable.table[i].data == '=')
 			{
 				bool recipientEl = false;
-				*stream << '\n' << "; expression #" << t.lextable.table[i].sn << " :"; // вывод разбираемого выражения
+				*stream << '\n' << "; expression #" << t.lextable.table[i].sn << " :"; 
 
 				if(t.lextable.table[i -1].lexema == ']') {
-					for (int j = -4; t.lextable.table[i + j].lexema != LEX_SEMICOLON; j++) // 
+					for (int j = -4; t.lextable.table[i + j].lexema != LEX_SEMICOLON; j++)
 					{
 						*stream << t.lextable.table[i + j].lexema;
 					}
@@ -21,53 +21,57 @@ namespace CG {
 				}
 				else 
 				{
-					for (int j = -1; t.lextable.table[i + j].lexema != LEX_SEMICOLON; j++) // 
+					for (int j = -1; t.lextable.table[i + j].lexema != LEX_SEMICOLON; j++)
 					{
 						*stream << t.lextable.table[i + j].lexema;
 					}
 				}
 				
 				*stream << '\n';
-				int pos = 0;																		// позиция в строке
-				bool isArguments = false;															// флаг аргументов
+				int pos = 0;																		
+				bool isArguments = false;															
 				bool waitForAdres = false;
 				bool waitForReturn = false;
 				IT::Entry* func, * save = nullptr;		
 				IT::Entry* recipient = &t.idtable.table[t.lextable.table[i - 1].idxTI];
 				IT::Entry* adres =&t.idtable.table[t.lextable.table[i - 2].idxTI];
-				IT::Entry* recipient1 = &t.idtable.table[t.lextable.table[i - 1].idxTI];
-				IT::Entry* adres1 = &t.idtable.table[t.lextable.table[i - 2].idxTI];
-				IT::Entry* recipient2 = &t.idtable.table[t.lextable.table[i - 1].idxTI];
-				IT::Entry* adres2 = &t.idtable.table[t.lextable.table[i - 2].idxTI];
+				IT::Entry* arrOperand = &t.idtable.table[t.lextable.table[i - 4].idxTI];
+
 				if(recipientEl){
 					recipient = &t.idtable.table[t.lextable.table[i - 4].idxTI];
 				}
 				while (true)				
 				{
 					pos++;
-					if (t.lextable.table[i + pos].lexema == LEX_SEMICOLON || t.lextable.table[i + pos].lexema == '!') // 
+					if (t.lextable.table[i + pos].lexema == LEX_SEMICOLON || t.lextable.table[i + pos].lexema == '')
 					{
 
 						if(!waitForReturn){
 							if (!recipientEl) {
-								if (recipient->iddatatype != IT::CHR)										// если не char
+								if (recipient->iddatatype != IT::CHR)									
 								{
-									*stream << "pop " << recipient->id << '\n';								// то выталкиваем в переменную
+									*stream << "pop " << recipient->id << '\n';								
 								}
 								else
 								{
-									*stream << "pop eax\nmov " << recipient->id << ", al" << '\n';			// иначе в eax
+									*stream << "pop eax\nmov " << recipient->id << ", al" << '\n';			
 								}
 							}
 							else
 							{
 								if (adres->idtype == IT::L) {
-									*stream << "pop " << recipient->id << "[" << adres->value.vint << "]" << '\n';
+									*stream << "mov esi, OFFSET " << recipient->id << "		; получаем начальный адрес \n";
+									*stream << "add esi, " << adres->value.vint*4 << "		;переходим в адресе на нужное место(4 байта - элемент)\n ";
+									*stream << "pop SDWORD PTR[esi]" << '\n';
 								}
+
 								if (adres->idtype == IT::V) {
 									*stream << "push " << adres->id << '\n';
 									*stream << "pop eax" << '\n';
-									*stream << "pop " << recipient->id << "[eax]" << '\n';
+									*stream << "imul eax,4" << '\n';
+									*stream << "mov esi, OFFSET " << recipient->id << " ;начало массива в еси\n";
+									*stream << "add esi, eax ;переход к нужному элементу\n";
+									*stream << "pop SDWORD PTR[esi]\n";
 								}
 							}
 						}
@@ -85,7 +89,7 @@ namespace CG {
 					{
 						if (t.idtable.table[t.lextable.table[i + pos].idxTI].idtype != IT::F)
 						{
-							switch (t.idtable.table[t.lextable.table[i + 1].idxTI].iddatatype)
+							switch (t.idtable.table[t.lextable.table[i + pos].idxTI].iddatatype)
 							{
 							case (IT::CHR): {
 								*stream << "movzx eax, " << t.idtable.table[t.lextable.table[i + pos].idxTI].id << '\n';
@@ -104,39 +108,28 @@ namespace CG {
 									*stream << "push " << t.idtable.table[t.lextable.table[i + pos].idxTI].id << '\n';
 								}
 								else {
-									if (adres1 != adres2) {
-										adres2 = &t.idtable.table[t.lextable.table[i + pos].idxTI];
-										if (adres2->idtype == IT::L) {
-											*stream << "pop " << recipient2->id << "[" << adres2->value.vint << "]" << '\n';
-										}
-										if (adres2->idtype == IT::V) {
-											*stream << "push " << adres2->id << '\n';
-											*stream << "pop eax" << '\n';
-											*stream << "pop " << recipient2->id << "[eax]" << '\n';
-										}
+									waitForAdres = false;
+									if (t.idtable.table[t.lextable.table[i + pos].idxTI].idtype == IT::L) 
+									{
+										*stream << "mov esi, OFFSET " << arrOperand->id << "		; получаем начальный адрес \n";
+										*stream << "add esi, " << t.idtable.table[t.lextable.table[i + pos].idxTI].value.vint * 4 << "		;переходим в адресе на нужное место(4 байта - элемент)\n ";
+										*stream << "push SDWORD PTR[esi]" << '\n';
 									}
-									else {
-										adres1 = &t.idtable.table[t.lextable.table[i + pos].idxTI];
-										if (adres1->idtype == IT::L) {
-											*stream << "pop " << recipient1->id << "[" << adres1->value.vint << "]" << '\n';
-										}
-										if (adres1->idtype == IT::V) {
-											*stream << "push " << adres1->id << '\n';
-											*stream << "pop eax" << '\n';
-											*stream << "pop " << recipient1->id << "[eax]" << '\n';
-										}
+									if (t.idtable.table[t.lextable.table[i + pos].idxTI].idtype == IT::V) 
+									{
+										*stream << "push " << t.idtable.table[t.lextable.table[i + pos].idxTI].id << '\n';
+										*stream << "pop eax" << '\n';
+										*stream << "imul eax,4" << '\n';
+										*stream << "mov esi, OFFSET " << arrOperand->id << " ;начало массива в еси\n";
+										*stream << "add esi, eax ;переход к нужному элементу\n";
+										*stream << "pop SDWORD PTR[esi]\n";
 									}
 								}
 								break;
 							}
 							case (IT::ARR): {
 								waitForAdres = true;
-								if (recipient1 != recipient2) {
-									recipient2 = &t.idtable.table[t.lextable.table[i + pos].idxTI];
-								}
-								else {
-									recipient1 = &t.idtable.table[t.lextable.table[i + pos].idxTI];
-								}
+								arrOperand = &t.idtable.table[t.lextable.table[i + pos].idxTI];
 							}
 							}
 							save = &t.idtable.table[t.lextable.table[i + pos].idxTI];
@@ -229,7 +222,7 @@ namespace CG {
 					}
 				}
 			}
-			//разобрать ретурн
+			
 			else if (t.lextable.table[i].lexema == LEX_RETURN) {
 				IT::Entry* result = &t.idtable.table[t.lextable.table[i + 1].idxTI];
 
@@ -242,9 +235,9 @@ namespace CG {
 					*stream << "\nmov eax, " << result->id << '\n';
 				}
 			}
-			//разобрать вывод
+			
 			else if (t.lextable.table[i].lexema == LEX_PRINT) {
-				//pos++;
+				
 				IT::Entry* recipient = &t.idtable.table[t.lextable.table[i + 1].idxTI];
 				switch (t.idtable.table[t.lextable.table[i + 1].idxTI].iddatatype)
 				{
@@ -263,7 +256,7 @@ namespace CG {
 					else
 						*stream << t.idtable.table[t.lextable.table[i + 1].idxTI].id << '\n';
 
-					*stream << "CALL outputstr" << '\n';
+					*stream << "CALL outputstr\n";
 					break;
 				}
 				case (IT::INT): {
@@ -274,23 +267,26 @@ namespace CG {
 				}
 				case (IT::ARR): {
 					if(t.idtable.table[t.lextable.table[i + 3].idxTI].idtype==IT::L){
-						*stream << "\npush ";
-						*stream << t.idtable.table[t.lextable.table[i + 1].idxTI].id << "[" << t.idtable.table[t.lextable.table[i + 3].idxTI].value.vint << "]" << '\n';
-						*stream << "CALL outputuint" << '\n';
+						*stream << "\nmov esi, OFFSET "<< t.idtable.table[t.lextable.table[i + 1].idxTI].id<<" ;начало массива в еси\n";
+						*stream << "add esi, " << t.idtable.table[t.lextable.table[i + 3].idxTI].value.vint*4 << " ;переход к нужному элементу";
+						*stream << "\npush SDWORD PTR[esi]\n";
+						*stream << "CALL outputuint\n";
 						break;
 					}
 					if (t.idtable.table[t.lextable.table[i + 3].idxTI].idtype == IT::V) {
 						*stream << "push " << t.idtable.table[t.lextable.table[i + 3].idxTI].id << '\n';
 						*stream << "pop eax" << '\n';
-						*stream << "\npush ";
-						*stream << t.idtable.table[t.lextable.table[i + 1].idxTI].id << "[eax]" << '\n';
-						*stream << "CALL outputuint" << '\n';
+						*stream << "imul eax,4" << '\n';
+						*stream << "mov esi, OFFSET " << t.idtable.table[t.lextable.table[i + 1].idxTI].id << " ;начало массива в еси\n";
+						*stream << "add esi, eax ;переход к нужному элементу\n";
+						*stream << "push SDWORD PTR[esi]\n";
+						*stream << "CALL outputuint\n";
 						break;
 					}
 				}
 				}
 			}
-			//TODO: разобрать цикл
+			
 			else if (t.lextable.table[i].lexema == LEX_UNTIL) {
 				int pos = 1;
 				int st;
@@ -542,7 +538,7 @@ namespace CG {
 		*stream << "\t.model flat, stdcall\n";
 		*stream << "\tincludelib libucrt.lib\n";
 		*stream << "\tincludelib kernel32.lib\n";
-		*stream << "\tincludelib ../Debug/KNP-2024LIB.lib\n";
+		*stream << "\tincludelib ../StaticLibraries/KNP-2024LIB.lib\n";
 
 		*stream << "\tExitProcess PROTO :DWORD\n\n";
 		for (int i = 0; i < t.idtable.size; i++)
@@ -726,6 +722,7 @@ namespace CG {
 		WriteFunctions(stream, t);
 
 		*stream << "main PROC\n";
+		*stream << "mov esi,0 ;для работы с массивами\n";
 		int i = 0, st;
 		while (t.lextable.table[i].lexema != LEX_MAIN)
 			i++;

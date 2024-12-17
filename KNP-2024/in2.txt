@@ -1,18 +1,19 @@
 
 main
 {
-	extern str action Copy(str cop);
-	extern num action GetSize(str result);
+	declare array massiv[10];
+	declare num number;
 
-	declare num size;
-	declare str line1;
-	line1 = "test";
-	write line1;
-	size = GetSize(line1);
-	write size;
-	declare str line2;
-	line2 = Copy(line1);
-	write line2;
+
+	massiv[1]=1;
+	massiv[2]=2;
+	massiv[3]=3;
+	massiv[4]=4;
+	massiv[5]=5;
+
+	write "element";
+	number=massiv[3]+3;
+	write number;
 
 	
 	return 0;

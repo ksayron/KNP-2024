@@ -9,8 +9,8 @@
 
 namespace IT
 {
-	IdTable Create(	//создать таблицу ID
-		int size	//ёмкость
+	IdTable Create(	
+		int size	
 	) {
 		if (size > TI_MAXSIZE)
 		{
@@ -23,17 +23,17 @@ namespace IT
 		return out;
 	};
 	void Add(
-		IdTable& idtable,	//экземпляр таблицы идентификаторов
-		Entry entry			//строка таблицы идентификаторов
+		IdTable& idtable,	
+		Entry entry			
 	) {
 		if (idtable.size + 1 > idtable.maxsize)
 			throw ERROR_THROW(133);
 		idtable.table[idtable.size++] = entry;
 		//add error maxsize
 	};
-	Entry GetEntry(	//получить строку таблицы идентификаторов
-		IdTable& idtable,	//экземпляр таблицы идентификаторов
-		int n				//строка таблицы идентификаторов
+	Entry GetEntry(	
+		IdTable& idtable,	
+		int n				
 	) {
 		if (idtable.size + 1 > idtable.maxsize)
 			throw ERROR_THROW(134);
@@ -41,8 +41,8 @@ namespace IT
 		return idtable.table[n];
 	};
 	int IsId(
-		IdTable& idtable,	//возврат: номер строки(если есть) TI_NULLIDX(если нет)
-		char id[ID_MAXSIZE] //идентификатор
+		IdTable& idtable,	
+		char id[ID_MAXSIZE] 
 	) {
 		bool bflag = false;
 		for (int i = 0; i < idtable.size; i++)
@@ -66,7 +66,7 @@ namespace IT
 		return TI_NULLIDX;
 	};
 	int IsLX(
-		IdTable& idtable,	//возврат: номер строки(если есть) TI_NULLID(если нет)
+		IdTable& idtable,	
 		IDDATATYPE type,
 		int data
 	) {
@@ -96,7 +96,7 @@ namespace IT
 		return TI_NULLIDX;
 	};
 	int IsLX(
-		IdTable& idtable,	//возврат: номер строки(если есть) TI_NULLID(если нет)
+		IdTable& idtable,	
 		IDDATATYPE type,
 		char data
 	) {
@@ -112,7 +112,7 @@ namespace IT
 		return TI_NULLIDX;
 	};
 	int IsLX(
-		IdTable& idtable,	//возврат: номер строки(если есть) TI_NULLID(если нет)
+		IdTable& idtable,	
 		IDDATATYPE type,
 		char* data
 	) {
@@ -155,8 +155,8 @@ namespace IT
 
 
 	bool isUniq(
-		IdTable& idtable,	//возврат: номер строки(если есть) TI_NULLIDX(если нет)
-		char id[ID_MAXSIZE] //идентификатор
+		IdTable& idtable,	
+		char id[ID_MAXSIZE] 
 	) {
 		bool bflag = false;
 		int isQ = 0;

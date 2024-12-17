@@ -1,6 +1,6 @@
 declare num action sum(num first,num second){
 	declare num result;
-	result = first+second;
+	result = 123;
 	return result;
 };
 
@@ -18,12 +18,14 @@ main
 	if(number ! 5){
 	write "If works";
 	};
-	if(number == 5){
+	if(number = = 5){
 	write "If doesn't work";
 	};
-		declare array massiv[10];
+	
+	
+	declare array massiv[10];
 	declare str line;
-	line = "Random:";
+	
 	write line;
 
 	declare num i;
@@ -35,25 +37,35 @@ main
 	};
 
 	write "element";
-	massiv[1]=5; 
+
 	write massiv[1];
+	number=[5]+massiv[6];
+	write number;
 
 	number = sum(5,4);
 	write number;
 	number = 0x45;
 	write number;
+	line = "Random:";
+	write line;
 	number = Random(50);
+	write number;
+	number = Random(10);
+	write number;
+	write "shift!!!!";
+	number = 12;
+	write number;
+	number  = number / 2;
 	write number;
 
 	declare str greet;
-	greet="Hello, World!";
+	greet="Hello, World!666666666666666666666666666666666666666";
 	write greet;
 
 	write "Длина:";
 	declare num comp;
 	comp = GetSize(greet);
 	write comp;
-	
 	
 	write greet;
 	declare str greet2;
@@ -71,11 +83,23 @@ main
 	if(comp==2){
 	write "Вторая строка больше";
 	};
-	
-	
-	
-	
 
-
+	write "operations";
+	declare num a;
+	declare num b;
+	declare num c;
+	a=50;
+	b=36;
+	c=3;
+	declare num res;
+	res=(a+c)*b;
+	write res;
+	res=a/b;
+	write res;
+	res= ^b;
+	write res;
+	res=a|b;
+	write res;
+	
 	return 0;
 }

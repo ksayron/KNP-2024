@@ -8,42 +8,41 @@
 #include "LT.h"
 namespace FST
 {
-	struct RELATION //ребро:символ -> вершина графа переходов КА
+	struct RELATION
 	{
-		char symbol; //символ перехода
-		short nnode; //номер смежной вершины
+		char symbol; 
+		short nnode; 
 		RELATION(
-			char c = 0x00, // символ перехода
-			short ns = NULL //новое состояние
+			char c = 0x00, 
+			short ns = NULL
 		);
 	};
-	struct NODE	//вершина графа переходов
+	struct NODE
 	{
-		short n_relation;	//количество инцендентных ребер 
-		RELATION* relations; //инцидентные ребра
+		short n_relation;	
+		RELATION* relations;
 		NODE();
 		NODE(
-			short n,		//количество инцендентных ребер
-			RELATION rel, ... //список ребер
+			short n,		
+			RELATION rel, ... 
 		);
 	};
-	struct FST	//недетерминированный конечный автомат
+	struct FST	
 	{
-		char* string; //цепочка (строка, завершается 0х00)
-		short position; //текущая позиция в цепочке
-		short nstates; //количество состояний автомата
-		NODE* nodes;	//граф переходов: [0] - начальное состояние, [nstate-1] - конечное
-		short* rstates; //возможные состояния автомата на данной позиции
+		char* string; 
+		short position; 
+		short nstates; 
+		NODE* nodes;	
+		short* rstates; 
 		FST(
-			char* s, //цепочка(строка, завершается 0х00)
-			short ns, //количество состояний автомата
-			NODE n, ...	//список состояний (граф переходов)
+			char* s, 
+			short ns, 
+			NODE n, ...	
 		);
 
 	};
-	bool execute(FST& fst); //выполнить автомат
-	void LexAnalyzer(In::IN in, Out::OUT out, Log::LOG log, LT::LexTable& a, IT::IdTable& b); //анализатор лексем
-
+	bool execute(FST& fst); 
+	void LexAnalyzer(In::IN in, Out::OUT out, Log::LOG log, LT::LexTable& a, IT::IdTable& b); 
 	struct libfuncs { 
 	std::string name;
 	IT::IDDATATYPE params[255];

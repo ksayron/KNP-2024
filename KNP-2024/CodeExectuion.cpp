@@ -5,7 +5,7 @@
 #include <codecvt>
 
 
-void compileAndRunAssemblyFile(wchar_t* asmFileName) {
+void Execute(wchar_t* asmFileName) {
 
     std::wstring name = asmFileName;
     std::wstring masmCommand = L"ml /c " + name;

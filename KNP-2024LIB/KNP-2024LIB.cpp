@@ -2,17 +2,20 @@
 #include "framework.h"
 #include <iostream>
 #include <ctime>
-#pragma comment(lib, "libucrt.lib")
+#pragma warning(disable: 4996)
 
 extern "C"
 {
-	int __stdcall ord(char ch)
+	int __stdcall ctn(char ch)
 	{
-		return (int)ch;
+		if (ch >= '0' && ch <= '9')		return (int)ch - 48;
+		else return 0;
 	}
-	unsigned char __stdcall chr(int number)
+	unsigned char __stdcall ntc(int number)
 	{
-		return (unsigned char)number;
+		if (number < 0)number *= -1;
+		if (number > 9)number %= 10;
+		return (char)number;
 	}
 
 
@@ -23,51 +26,20 @@ extern "C"
 		return result;
 	}
 
+	int __stdcall GetSize(char* str1)
+	{
+		return strlen(str1);
+	}
+
 	int __stdcall Random(int max)
 	{
 		srand(time(0));
 		return rand() % max + 1;
 	}
 
-	char* __stdcall Concat(char* str1, char* str2) {
-		size_t totalLength = strlen(str1) + strlen(str2) + 1;
-
-		char* result = new char[totalLength];
-
-		size_t i = 0;
-		size_t j = 0;
-
-		while (str1[i] != '\0') {
-			result[i] = str1[i];
-			i++;
-		}
-
-		while (str2[j] != '\0') {
-			result[i] = str2[j];
-			i++;
-			j++;
-		}
-
-		result[i] = '\0'; 
-
-		return result;
-	}
-
 	char* __stdcall Copy(char* str1) {
-		size_t totalLength = strlen(str1) + 1;
 
-		char* result = new char[totalLength];
-
-		size_t i = 0;
-
-		while (str1[i] != '\0') {
-			result[i] = str1[i];
-			i++;
-		}
-
-		result[i] = '\0'; // Null-terminate the result string
-
-		return result;
+		return str1;
 	}
 
 	void __stdcall outputuint(int a)

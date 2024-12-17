@@ -1,20 +1,20 @@
 ﻿#pragma once
 #include "tchar.h"
-#define PARM_IN L"-in:"   //ключ для файла исходного файла
-#define PARM_OUT L"-out:" //ключ для файла объектного файлы
-#define PARM_LOG L"-log:" //ключ для файла журнала
+#define PARM_IN L"-in:"   
+#define PARM_OUT L"-out:" 
+#define PARM_LOG L"-log:" 
 
-#define PARM_MAX_SIZE 300 //максимальная длина строки параметров
-#define PARM_OUT_DEFAULT_EXT L".asm" //Расширение файла объектного кода по умоланию
-#define PARM_LOG_DEFAULT_EXT L".log" //расширение файла протокола по умолчанию
+#define PARM_MAX_SIZE 300 
+#define PARM_OUT_DEFAULT_EXT L".asm" 
+#define PARM_LOG_DEFAULT_EXT L".log" 
 
-namespace Parm // обработка входных параметров
+namespace Parm 
 {
-	struct PARM //входные параметры
+	struct PARM 
 	{
-		wchar_t in[PARM_MAX_SIZE];// -in:  имя файла исходного кода
-		wchar_t out[PARM_MAX_SIZE];// -out: имя файла объектного кода
-		wchar_t log[PARM_MAX_SIZE];// -log: имя файла протокола
+		wchar_t in[PARM_MAX_SIZE];
+		wchar_t out[PARM_MAX_SIZE];
+		wchar_t log[PARM_MAX_SIZE];
 		bool showMfst;
 		bool showTables;
 		bool showITables;

@@ -11,6 +11,6 @@ namespace Semantic
 	void parameters(LEX::LEX t);
 
 
-	//void polyDefine(LEX::LEX t);
+	
 
 }

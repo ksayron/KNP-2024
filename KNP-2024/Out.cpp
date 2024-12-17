@@ -8,7 +8,7 @@
 #include <cstdarg>
 #include "time.h"
 
-namespace Out //работа с протоколом
+namespace Out 
 {
 	OUT getout(wchar_t outfile[])
 	{

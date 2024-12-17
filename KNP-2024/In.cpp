@@ -13,7 +13,7 @@ namespace In
 		out.ignor = 0;
 		std::ifstream file(infile);
 		if (!file)
-			throw ERROR_THROW(110)//файл не открыт
+			throw ERROR_THROW(110)
 		else
 		{
 			unsigned int chars[] = IN_CODE_TABLE;
@@ -139,7 +139,7 @@ namespace In
 						throw ERROR_THROW_IN(113, out.lines, line_counter);
 					break;
 				}
-				case IN::S://space
+				case IN::S:
 				{
 					out.size++;
 					line_counter++;
@@ -156,7 +156,7 @@ namespace In
 					break;
 				}
 
-				case IN::L:// одиночная лексема
+				case IN::L:
 				{
 					out.size++;
 					line_counter++;

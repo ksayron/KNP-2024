@@ -5,11 +5,6 @@ namespace Semantic {
 		operands(t);
 		parameters(t);
 		returns(t);
-		/*
-
-		parameters(t);
-
-		equals(t);*/
 
 	};
 
@@ -22,26 +17,32 @@ namespace Semantic {
 				case '=':
 				{
 					int pos = -1;
-					//int isPlus = true;
+					if (t.lextable.table[i + pos].lexema == ']') {
+						pos = -4;
+					}
 					int datatype = -1;
 					while (t.lextable.table[i + pos].lexema != LEX_SEMICOLON) {
-						if (t.lextable.table[i + pos].lexema == LEX_LITERAL || t.lextable.table[i + pos].lexema == LEX_ID)
+						if ((t.lextable.table[i + pos].lexema == LEX_LITERAL || t.lextable.table[i + pos].lexema == LEX_ID)&& t.lextable.table[i + pos-1].lexema!='[')
 						{
 							if (datatype == -1)
+							{
 								datatype = t.idtable.table[t.lextable.table[i + pos].idxTI].iddatatype;
+							}
 							else
+							{
 								if (datatype != t.idtable.table[t.lextable.table[i + pos].idxTI].iddatatype)
 								{
-									if (!((datatype == 1 && t.idtable.table[t.lextable.table[i + pos].idxTI].iddatatype == IT::ARR) || (datatype == 4 && t.idtable.table[t.lextable.table[i + pos].idxTI].iddatatype == IT::INT))) {
+									if (!((datatype == IT::INT && t.idtable.table[t.lextable.table[i + pos].idxTI].iddatatype == IT::ARR) || (datatype == IT::ARR && t.idtable.table[t.lextable.table[i + pos].idxTI].iddatatype == IT::INT))) {
 										throw ERROR_THROW_IN(704, t.lextable.table[i + pos].sn, t.lextable.table[i + pos].cn)
 									}
 								}
+							}
 
-									//если функция то пропускай gfhfvtnhs aeyrwbb
-									if (t.idtable.table[t.lextable.table[i + pos].idxTI].idtype == IT::F) {
-										while (t.lextable.table[i + pos].lexema != LEX_RIGHTHESIS)
-											pos++;
-									}
+									
+							if (t.idtable.table[t.lextable.table[i + pos].idxTI].idtype == IT::F) {
+								while (t.lextable.table[i + pos].lexema != LEX_RIGHTHESIS)
+									pos++;
+							}
 						}
 						if (datatype == IT::STR && t.lextable.table[i + pos].lexema == LEX_OPERATOR && pos != 0 && t.lextable.table[i + pos].data != '+') {
 							throw ERROR_THROW_IN(708, t.lextable.table[i + pos].sn, t.lextable.table[i + pos].cn)
@@ -56,7 +57,7 @@ namespace Semantic {
 				}
 				}
 			}
-			//проверка аргументов while
+			
 			if (t.lextable.table[i].lexema == LEX_UNTIL) {
 				int pos = 2;
 				while (true) {
@@ -73,7 +74,6 @@ namespace Semantic {
 		}
 	}
 
-	//проверка передаваемых в функцию параметров
 	void parameters(LEX::LEX t) {
 		for (int i = 0; i < t.lextable.size; i++) {
 			if (t.lextable.table[i].lexema == LEX_PRINT && t.idtable.table[t.lextable.table[i + 1].idxTI].idtype == IT::F)
@@ -82,7 +82,7 @@ namespace Semantic {
 				{
 					short* types = new short[256];
 					int typesLen = 0;
-					//где объявлена функция в LT
+					
 					int funcDeclarePos = t.idtable.table[t.lextable.table[i].idxTI].idxfirstLE;
 					while (t.lextable.table[++funcDeclarePos].lexema != LEX_RIGHTHESIS)
 					{
@@ -105,7 +105,7 @@ namespace Semantic {
 	}
 
 
-	//возврат функции!!!!
+	
 	void returns(LEX::LEX t) {
 		for (int i = 0; i < t.lextable.size; i++) {
 			if (t.lextable.table[i].lexema == LEX_ID && t.idtable.table[t.lextable.table[i].idxTI].idtype == IT::F && t.lextable.table[i - 3].lexema == LEX_DECLARE)

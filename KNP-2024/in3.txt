@@ -1,18 +1,21 @@
 main
 {	
-	declare num result;
-	declare array number[5];
-	declare num calc;
-	calc = 3;
-	number[calc]=4;
-	write calc;
-	write number[3];
-	write number[calc];
-	calc = -2147483649;
-	write calc;
-
-	
-
+	write "operations";
+	declare num a;
+	declare num b;
+	declare num c;
+	a=5;
+	b=4;
+	c=3;
+	declare num res;
+	res=(a+c)*b;
+	write res;
+	res=a/b;
+	write res;
+	res= ^b;
+	write res;
+	res=a|b;
+	write res;
 
 
 	return 0;

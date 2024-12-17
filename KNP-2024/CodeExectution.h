@@ -1,3 +1,3 @@
 
 
-void compileAndRunAssemblyFile(wchar_t* asmFileName);
+void Execute(wchar_t* asmFileName);

@@ -5,7 +5,7 @@
 #define LEX_NUM 't'
 #define LEX_STRING	't'
 #define LEX_CHAR	't' 
-#define LEX_TYPE	't' //лексема типа(num/symb)
+#define LEX_TYPE	't' 
 #define LEX_ARRAY	'a'
 #define LEX_ID		'i'
 #define LEX_UNTIL	'u'
@@ -41,19 +41,19 @@
 
 namespace LT
 {
-	struct Entry //строка таблицы лексем
+	struct Entry
 	{
-		char lexema;//лексема
-		int sn; //номер строки в исходном тексте
-		int cn; //номер столбца в исходном тексте
-		int idxTI;	//индекс идентификатора в таблице
+		char lexema;
+		int sn;
+		int cn;
+		int idxTI;
 		char data;
 
 		Entry(
 			char lexema,
-			int sn, //номер строки в исходном тексте
-			int cn, //номер столбца в исходном тексте
-			int idxTI,	//индекс идентификатора в таблице
+			int sn,
+			int cn,
+			int idxTI,
 			char symbol = EMPTY_DATA
 		) {
 			this->lexema = lexema;
@@ -65,24 +65,24 @@ namespace LT
 
 		Entry() = default;
 	};
-	struct LexTable //экземпляр таблицы лексем
+	struct LexTable
 	{
-		int maxsize; //емкость <LT_MAXSIZE
-		int size; //текущий размер таблицы лексем
-		Entry* table;	//массив строк
+		int maxsize;
+		int size;
+		Entry* table;
 	};
-	LexTable Create(//создать таблицу лексем
-		int size//емкость таблицы лексем < ДЕ_ЬФЧЫШЯУ
+	LexTable Create(
+		int size
 	);
-	void Add(	//добавить строку в таблицу лексем
-		LexTable& lextable,		//экземпляр таблицы лексем
-		Entry entry	//строка таблицы лексем
+	void Add(
+		LexTable& lextable,
+		Entry entry
 	);
-	Entry GetEntry(	//получить строку таблицы лексем
-		LexTable& lextable, //экземпляр
-		int n //номер получаемой строки
+	Entry GetEntry(
+		LexTable& lextable,
+		int n
 	);
 
 
-	void Delete(LexTable& lextable);	//удалить таблицу лексем
+	void Delete(LexTable& lextable);
 }
